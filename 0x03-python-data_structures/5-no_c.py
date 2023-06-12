@@ -8,7 +8,6 @@
 # email igbinijesusamuel@gmail.com
 # -----------------------------------------------------------
 
-
 def no_c(my_string):
     """Removes all characters c and C from a string
 
