@@ -1,6 +1,5 @@
 /*
  * File: 13-insert_number.c
- * Auth: Brennan D Baraban
  */
 
 #include "lists.h"
