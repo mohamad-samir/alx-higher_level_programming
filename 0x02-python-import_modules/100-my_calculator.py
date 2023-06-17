@@ -1,21 +1,21 @@
 #!/usr/bin/python3
-# 100-my_calculator.py
 
-
-from calculator_1 import add, sub, mul, div
 import sys
+import calculator_1
 
-if len(sys.argv) - 1 != 3:
-	print("Usage: ./100-my_calculator.py <a> <operator> <b>")
-	sys.exit(1)
-
-ops = {"+": add, "-": sub, "*": mul, "/": div}
-
-if sys.argv[2] not in list(ops.keys()):
-	print("Unknown operator. Available operators: +, -, * and /")
-	sys.exit(1)
+"""Handle basic operations."""
+if len(sys.argv) != 3:
+    print("Usage: ./100-my_calculator.py <a> <operator> <b>")
+    sys.exit(1)
 
 a = int(sys.argv[1])
+operator = sys.argv[2]
 b = int(sys.argv[3])
 
-print("{} {} {} = {}".format(a, sys.argv[2], b, ops[sys.argv[2]](a, b)))
+try:
+    func = getattr(calculator_1, operator)
+    result = func(a, b)
+    print(f"{a} {operator} {b} = {result}")
+except AttributeError:
+    print("Unknown operator. Available operators: +, -, * and /")
+    sys.exit(1)
