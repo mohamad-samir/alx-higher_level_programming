@@ -1,27 +1,29 @@
 #!/usr/bin/python3
 # 100-my_calculator.py
 
-import sys
-from calculator_1 import add, sub, mul, div
+if __name__ == "__main__":
+	"""Handle basic arithmetic operations."""
+	import sys
+	from calculator_1 import add, sub, mul, div
 
-if len(sys.argv) != 4:
-	print("Usage: ./100-my_calculator.py <a> <operator> <b>")
-	sys.exit(1)
+	# التحقق من عدد الوسائط المدخلة
+	if len(sys.argv) != 4:
+		print("Usage: ./100-my_calculator.py <a> <operator> <b>")
+		sys.exit(1)
 
-a = int(sys.argv[1])
-operator = sys.argv[2]
-b = int(sys.argv[3])
+	# قاموس يعين كل عملية لوظيفتها المقابلة
+	operations = {"+": add, "-": sub, "*": mul, "/": div}
 
-if operator == "+":
-	result = add(a, b)
-elif operator == "-":
-	result = sub(a, b)
-elif operator == "*":
-	result = mul(a, b)
-elif operator == "/":
-	result = div(a, b)
-else:
-	print("Unknown operator. Available operators: +, -, * and /")
-	sys.exit(1)
+	# التحقق مما إذا كان المشغل المدخل صحيحًا
+	operator = sys.argv[2]
+	if operator not in operations:
+		print("Unknown operator. Available operators: +, -, * and /")
+		sys.exit(1)
 
-print(f"{a} {operator} {b} = {result}")
+	# تحويل الأعداد إلى أرقام صحيحة
+	a = int(sys.argv[1])
+	b = int(sys.argv[3])
+
+	# تنفيذ العملية المحددة وطباعة النتيجة
+	result = operations[operator](a, b)
+	print(f"{a} {operator} {b} = {result}")
