@@ -16,5 +16,5 @@ def max_integer(numbers_list):
     for number in numbers_list:
         if number > max_value:
             max_value = number
-    
+
     return max_value
