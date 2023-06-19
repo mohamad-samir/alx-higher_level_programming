@@ -1,12 +1,4 @@
 #!/usr/bin/python3
-# -----------------------------------------------------------
-# Python program that:
-# demonstrates how to delete the item at a specific position in a list
-#
-# (C) 2022 Igbinijesu Samuel, Lagos, Nigeria
-# email igbinijesusamuel@gmail.com
-# -----------------------------------------------------------
-
 
 def delete_at(my_list=[], idx=0):
     """deletes the item at a specific position in a list
@@ -21,5 +13,5 @@ def delete_at(my_list=[], idx=0):
 
     if idx < 0 or idx >= len(my_list):
         return my_list
-    my_list.remove(my_list[idx])
+    my_list = my_list[:idx] + my_list[idx+1:]
     return my_list
