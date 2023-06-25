@@ -1,12 +1,4 @@
 #!/usr/bin/python3
-# -----------------------------------------------------------
-# Python program that:
-# demonstrates how to return a new dictionary with all values multiplied by 2
-#
-# (C) 2022 Igbinijesu Samuel, Lagos, Nigeria
-# email igbinijesusamuel@gmail.com
-# -----------------------------------------------------------
-
 
 def multiply_by_2(a_dictionary):
     new_dict = a_dictionary.copy()
