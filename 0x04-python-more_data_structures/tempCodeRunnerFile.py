@@ -1,0 +1,1 @@
+key=a_dictionary.get
