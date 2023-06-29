@@ -11,25 +11,12 @@
 
 
 def safe_print_list_integers(my_list=[], x=0):
-
-    idx = 0
-    elements_printed = 0
-
-    while x > 0:
-
+    count = 0
+    for i in range(x):
         try:
-            print("{:d}".format(my_list[idx]), end='')
-            x -= 1
-            idx += 1
-        except ValueError:
-            x -= 1
-            idx += 1
-        except TypeError:
-            x -= 1
-            idx += 1
-        else:
-            elements_printed += 1
-
+            print("{:d}".format(my_list[i]), end="")
+            count += 1
+        except (ValueError, TypeError, IndexError):
+            continue
     print()
-
-    return elements_printed
+    return count
