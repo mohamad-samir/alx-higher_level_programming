@@ -15,20 +15,18 @@ def safe_print_list_integers(my_list=[], x=0):
     element_printed = 0
     while x > 0:
         try:
-            print("{:d}".format(my_list[idx]),end="")
-            idx+=1
-            x-=1
+            print("{:d}".format(my_list[idx]), end="")
+            idx += 1
+            x -= 1
         except TypeError:
-            idx+=1
-            x-=1
+            idx += 1
+            x -= 1
         except ValueError:
-            idx+=1
-            x-=1
+            idx += 1
+            x -= 1
         else:
-            element_printed +=1
-        
+            element_printed += 1
+
     print()
 
-    return  element_printed
-
-
+    return element_printed
