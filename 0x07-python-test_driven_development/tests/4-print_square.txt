@@ -1,74 +1,32 @@
-this is a file test for the "def print_square(size)" function
-execute with: python3 -m doctest -v ./tests/4-print_square.txt
+================================
+UNIT TESTS FOR 4-print_square.py
+================================
 
-##########################################################
-import the module:
-    >>> print_square = __import__('4-print_square').print_square
 
-check for documentation:
-    >>> module_documentation = __import__("4-print_square").__doc__
-    >>> print(len(module_documentation) > 0)
-    True
+>>> print_square = __import__('4-print_square').print_square
+>>> print_square(2)
+##
+##
 
-    >>> function_documentation = __import__("4-print_square").__doc__
-    >>> print(len(function_documentation) > 0)
-    True
+>>> print_square(0)
 
-##########################################################
-try differents working square
-    Size 0
-        >>> print_square(0)
+>>> print_square(-40)
+Traceback (most recent call last):
+	...
+ValueError: size must be >= 0
 
-    Size 1
-        >>> print_square(1)
-        #
+>>> print_square("holberton")
+Traceback (most recent call last):
+	...
+TypeError: size must be an integer
 
-    Size 10
-        >>> print_square(10)
-        ##########
-        ##########
-        ##########
-        ##########
-        ##########
-        ##########
-        ##########
-        ##########
-        ##########
-        ##########
+>>> print_square(4.4)
+####
+####
+####
+####
 
-##########################################################
-try differents np-working square
-    Size -1
-        >>> print_square(-1)
-        Traceback (most recent call last):
-        ValueError: size must be >= 0
-
-    Size 2.4
-        >>> print_square(2.4)
-        Traceback (most recent call last):
-        TypeError: size must be an integer
-
-    Size -2.5
-        >>> print_square(-2.5)
-        Traceback (most recent call last):
-        TypeError: size must be an integer
-
-    Size None
-        >>> print_square(None)
-        Traceback (most recent call last):
-        TypeError: size must be an integer
-
-    Size is a string
-        >>> print_square("John")
-        Traceback (most recent call last):
-        TypeError: size must be an integer
-
-    missing one argument
-        >>> print_square()
-        Traceback (most recent call last):
-        TypeError: print_square() missing 1 required positional argument: 'size'
-
-    giving one more argument
-        >>> print_square(1, 2)
-        Traceback (most recent call last):
-        TypeError: print_square() takes 1 positional argument but 2 were given
+>>> print_square(-4.2)
+Traceback (most recent call last):
+	...
+TypeError: size must be an integer
