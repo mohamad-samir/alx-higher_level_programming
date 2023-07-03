@@ -25,15 +25,15 @@ def matrix_divided(matrix, div):
     err_row = "Each row of the matrix must have the same size"
 
     if not isinstance(matrix, list) or not all(
-        (isinstance(inner, list) for inner in matrix)
-    ):
+            (isinstance(inner, list) for inner in matrix)):
         raise TypeError(err_lol)
 
     row_size = len(matrix[0])
-    for inner in matrix:
-        if any(type(e) not in (int, float) for e in inner):
+
+    for each_row in matrix:
+        if any(type(elemnt) not in (int, float) for elemnt in each_row):
             raise TypeError(err_lol)
-        if len(inner) != row_size:
+        if len(each_row) != row_size:
             raise TypeError(err_row)
 
     if type(div) not in (int, float):
