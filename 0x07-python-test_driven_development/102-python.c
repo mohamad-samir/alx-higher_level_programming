@@ -6,13 +6,14 @@
  * print_python_string - prints information about a python string
  * @p: pointer to the string object, checks to see it is string
  */
+
 void print_python_string(PyObject *p)
 {
+	int u;
+	ssize_t len = 0;
 	char *unicode = "compact unicode object";
 	char *ascii = "compact ascii";
 	char *str = NULL, *encoding = NULL;
-	ssize_t len = 0;
-	int i;
 	PyObject *str_ob = NULL;
 
 	printf("[.] string object info\n");
@@ -27,9 +28,9 @@ void print_python_string(PyObject *p)
 	str_ob = PyUnicode_AsUTF8String(p);
 	str = PyBytes_AsString(str_ob);
 
-	for (i = 0; i < len; i++)
+	for (u = 0; u < len; u++)
 	{
-		if (str[i] < 0)
+		if (str[u] < 0)
 		{
 			encoding = unicode;
 			break;
@@ -37,6 +38,7 @@ void print_python_string(PyObject *p)
 	}
 	if (encoding == NULL)
 		encoding = ascii;
+
 	printf("  type: %s\n", encoding);
 	printf("  length: %ld\n", len);
 	printf("  value: %s\n", str);

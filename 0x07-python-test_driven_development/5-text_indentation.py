@@ -1,18 +1,33 @@
 #!/usr/bin/python3
+"""This module contains a function that splits text by specified delimiters."""
 
 
 def text_indentation(text):
-    """
-    prints a string of text with 2 new lines after '.', '?', and ':'
-    unit tests located in tests/5-text_indentation.txt
+    """Prints text separated by deliiters, line by line.
+
+    Args:
+        text (str): Text to print.
+
+    Raises:
+        TypeError: If text given is not a string.
     """
     if not isinstance(text, str):
         raise TypeError("text must be a string")
+    if not text:
+        return
 
-    string = ""
-    specials = ['.', '?', ':']
-    for ch in text:
-        string += ch
-        if ch in specials:
-            string += "\n\n"
-    print(string, end='')
+    chars = ""
+    splited = []
+    for char in text:
+        chars += char
+        if char in ".?:":
+            splited.append(chars.strip())
+            chars = ""
+
+    if chars:
+        splited.append("".join(chars).strip())
+
+    for line in splited[:-1]:
+        print(line)
+        print("")
+    print(splited[-1], end="")

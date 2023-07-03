@@ -1,24 +1,23 @@
 #!/usr/bin/python3
+"""This module contains a function that prints a square."""
 
 
 def print_square(size):
+    """Prints a square with the character #
+
+    Args:
+        size (int): The size of the square.
+
+    Raises:
+        TypeError: If size is not an intger.
+        ValueError: If size is a negative number.
     """
-    prints a square of given size
-    unit tests are located in tests/4-print_square.txt
-    """
-    if not isinstance(size, (int, float)):
+    if not isinstance(size, int):
         raise TypeError("size must be an integer")
-    elif size < 0:
+    if size < 0:
         if isinstance(size, float):
             raise TypeError("size must be an integer")
         else:
             raise ValueError("size must be >= 0")
-
-    size = int(size)  # if it was a float convert it
-    i = 0
-
-    for i in range(0, size):
-        j = 0
-        for j in range(0, size):
-            print('#', end='')
-        print()
+    for _ in range(int(size)):
+        print("#" * size)

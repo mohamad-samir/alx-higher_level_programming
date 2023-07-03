@@ -1,20 +1,28 @@
 #!/usr/bin/python3
+""" This module contains a simple function that returns the sum of
+    2 integers.
+"""
 
 
-def add_integer(a, b=98):
+def add_integer(a, b=98) -> int:
+    """ Computes and returns the sum of 2 integers.
+
+    Args:
+        a (int | float): First number to be added.
+        b (int | float): Second number to be added.
+
+    Raises:
+        TypeError: If either of the arguments is not an integer or float.
+
+    Returns:
+        int: Sum of the 2 numbers.
     """
-    adds an integer
-    unit tests located in tests/0-add_integer.txt
-    checks for type errors
-    """
-    if not isinstance(a, int):
-        if isinstance(a, float):
-            a = int(a)
-        else:
-            raise TypeError("a must be an integer")
-    if not isinstance(b, int):
-        if isinstance(b, float):
-            b = int(b)
-        else:
-            raise TypeError("b must be an integer")
+    if type(a) not in (int, float):
+        raise TypeError("a must be an integer")
+    if type(b) not in (int, float):
+        raise TypeError("b must be an integer")
+
+    a = int(a)
+    b = int(b)
+
     return a + b
