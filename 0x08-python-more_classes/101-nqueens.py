@@ -1,64 +1,56 @@
 #!/usr/bin/python3
-"""
-N queens puzzle
-"""
 
+"""
+module for calculation of n-queens problem
+"""
 import sys
 
-if len(sys.argv) != 2:
-    print("Usage: nqueens N")
-    exit(1)
+class Solution_Board:
+    """class for use with n queens problem
+    """
+    solutions = []
 
-try:
-    N = int(sys.argv[1])
-except Exception:
+    def __init__(self, num):
+        self.num = num
+
+    @property
+    def num(self):
+        return self.__num
+
+    @num.setter
+    def num(self, value):
+        if not isinstance(num, int):
+            raise TypeError("num should be an int")
+        self.__num = value
+
+args = sys.argv
+
+if len(args) != 2:
+    exit(1)
+if not args[1].isdigit():
     print("N must be a number")
     exit(1)
 
-if N < 4:
+num = int(args[1])
+if num < 4:
     print("N must be at least 4")
     exit(1)
 
-# create a matrix of NxN
-matrix = []
-for i in range(N):
-    matrix.append([0] * N)
+solutions = []
+board = [[0 for a in range(0, num)] for b in range(0, num)]
+running = True
+while running:
+    sol = get_n_queens(board)
+    solutions.append(sol)
+    running = False
 
-
-def is_attack(i, j):
-    # checking if there is a queen in row or column
-    for k in range(0, N):
-        if matrix[i][k] == 1 or matrix[k][j] == 1:
-            return True
-    # checking diagonals
-    for k in range(0, N):
-        for lr in range(0, N):
-            if (k + lr == i + j) or (k - lr == i - j):
-                if matrix[k][lr] == 1:
-                    return True
-    return False
-
-
-def N_queen(n):
-    # if n is 0, solution found
-    if n == 0:
+def get_n_queens(chess_board, column, num):
+    if column >= num:
         return True
-    for i in range(0, N):
-        for j in range(0, N):
-            '''checking if we can place a queen here or not
-            queen will not be placed if the place is being attacked
-            or already occupied'''
-            if (not(is_attack(i, j))) and (matrix[i][j] != 1):
-                matrix[i][j] = 1
-                # recursion
-                # wether we can put the next queen with this arrangment or not
-                if N_queen(n - 1) is True:
-                    return True
-                matrix[i][j] = 0
-
+    for i in range(0, num):
+        if board_safe(chess_board, column):
+            chess_board[i][column] = 1
+            if get_n_queens(chess_board, column + 1):
+                return True
+            board[i][column] = 0
     return False
-
-
-N_queen(N)
-# for i in matrix:
-#     print (i)
