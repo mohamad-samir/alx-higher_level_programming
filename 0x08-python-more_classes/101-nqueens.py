@@ -5,8 +5,10 @@ module for calculation of n-queens problem
 """
 import sys
 
+
 class Solution_Board:
-    """class for use with n queens problem
+    """
+    class for use with n queens problem
     """
     solutions = []
 
@@ -23,7 +25,9 @@ class Solution_Board:
             raise TypeError("num should be an int")
         self.__num = value
 
+
 args = sys.argv
+
 
 if len(args) != 2:
     exit(1)
@@ -39,6 +43,7 @@ if num < 4:
 solutions = []
 board = [[0 for _ in range(0, num)] for _ in range(0, num)]
 
+
 def get_n_queens(chess_board, column=0, num=0):
     if column >= num:
         return True
@@ -49,6 +54,7 @@ def get_n_queens(chess_board, column=0, num=0):
                 return True
             chess_board[i][column] = 0
     return False
+
 
 def board_safe(chess_board, row, column):
     # Check if there is a queen in the same column
@@ -75,6 +81,7 @@ def board_safe(chess_board, row, column):
         j += 1
 
     return True
+
 
 running = True
 while running:
