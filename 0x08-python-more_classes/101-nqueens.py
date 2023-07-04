@@ -1,80 +1,65 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
-Solve the N queens problem.
+N queens puzzle
+"""
 
-Usage: nqueens N
-where N must be an integer greater or equal to 4
-"""
 
 import sys
 
-def solve_nqueens(N):
-    def is_safe(board, row, col):
-        # Check if there is a queen in the same column
-        for i in range(row):
-            if board[i][col] == 1:
-                return False
-        
-        # Check if there is a queen in the upper left diagonal
-        i = row
-        j = col
-        while i >= 0 and j >= 0:
-            if board[i][j] == 1:
-                return False
-            i -= 1
-            j -= 1
-        
-        # Check if there is a queen in the upper right diagonal
-        i = row
-        j = col
-        while i >= 0 and j < N:
-            if board[i][j] == 1:
-                return False
-            i -= 1
-            j += 1
-        
-        return True
+if len(sys.argv) != 2:
+    print("Usage: nqueens N")
+    exit(1)
 
-    def backtrack(board, row):
-        if row == N:
-            # Found a solution, add it to the list of solutions
-            solutions.append([list(row) for row in board])
+try:
+    N = int(sys.argv[1])
+except Exception:
+    print("N must be a number")
+    exit(1)
+
+if N < 4:
+    print("N must be at least 4")
+    exit(1)
+
+# create a matrix of NxN
+matrix = []
+for i in range(N):
+    matrix.append([0] * N)
+
+
+def is_attack(i, j):
+    # checking if there is a queen in row or column
+    for k in range(0, N):
+        if matrix[i][k] == 1 or matrix[k][j] == 1:
             return True
-        
-        for col in range(N):
-            if is_safe(board, row, col):
-                board[row][col] = 1
-                backtrack(board, row + 1)
-                board[row][col] = 0
+    # checking diagonals
+    for k in range(0, N):
+        for lr in range(0, N):
+            if (k + lr == i + j) or (k - lr == i - j):
+                if matrix[k][lr] == 1:
+                    return True
+    return False
 
-    # Initialize the board
-    board = [[0] * N for _ in range(N)]
-    solutions = []
 
-    # Start the backtracking algorithm
-    backtrack(board, 0)
+def N_queen(n):
+    # if n is 0, solution found
+    if n == 0:
+        return True
+    for i in range(0, N):
+        for j in range(0, N):
+            '''checking if we can place a queen here or not
+            queen will not be placed if the place is being attacked
+            or already occupied'''
+            if (not(is_attack(i, j))) and (matrix[i][j] != 1):
+                matrix[i][j] = 1
+                # recursion
+                # wether we can put the next queen with this arrangment or not
+                if N_queen(n - 1) is True:
+                    return True
+                matrix[i][j] = 0
 
-    return solutions
+    return False
 
-if __name__ == "__main__":
-    # Validate the input
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
 
-    try:
-        N = int(sys.argv[1])
-    except ValueError:
-        print("N must be a number")
-        sys.exit(1)
-
-    if N < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-
-    # Solve the N Queens problem
-    solutions = solve_nqueens(N)
-
-    # Print the solutions
-    for solution in solutions:
-        print(solution)
+N_queen(N)
+# for i in matrix:
+#     print (i)
