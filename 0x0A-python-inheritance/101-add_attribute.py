@@ -1,14 +1,20 @@
 #!/usr/bin/python3
+"""Add-Attribute Module"""
 
 
 def add_attribute(obj, name, value):
-    """adds an attribute to the class if possible
-        -> aka is
-    """
-    builtins = (str, int, complex, bool, float, list,
-                tuple, dict, set, frozenset, type, object)
-    for _type in builtins:
-        if type(obj) is _type:
-            raise TypeError("can't add new attribute")
+    """Tries to add an attribute to an object.
 
-    object.__setattr__(obj, name, value)
+    Args:
+        obj (object): The object we want to add an attribute to.
+        name (str): The name of the attribute to be added.
+        value (any): The value of the attribute to be added.
+
+    Raises:
+        TypeError: If the object does not have a dict attribute,
+                   meaning a new attribute can't be added.
+    """
+    if not hasattr(obj, '__dict__'):
+        raise TypeError("can't add new attribute")
+
+    setattr(obj, name, value)

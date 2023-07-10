@@ -1,11 +1,13 @@
 #!/usr/bin/python3
+"""Geometry module"""
 
 
-class BaseGeometry():
-    """for use with shapes. Super class.
-    """
-
+class BaseGeometry:
+    """Class definition of a BaseGeometry."""
     def area(self):
-        """instance method to calculate area of shape
+        """Computes the area of the geometry.
+
+        Raises:
+            Exception: Because the logic is not implemented yet.
         """
         raise Exception("area() is not implemented")

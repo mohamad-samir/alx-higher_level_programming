@@ -1,38 +1,17 @@
-# :shell: 0x0A - Python, Inheritance & Multiple Inheritance :shell:
+# Python - Inheritance
 
-I will be working with inheritance in Python in this project. Previously I have only worked with single inheritance-based languages like C#. Working with multiple inheritance will be interesting.
+Note on task 101
 
-## :running: Getting Started
+The ``__dict__`` attribute is a dictionary that stores an object's writable attributes or instance variables.
 
-* [Ubuntu 14.04 LTS](http://releases.ubuntu.com/14.04/) - Operating system reqd.
+Here are a few examples of Python objects that typically do not have a ``__dict__`` attribute:
 
-* [Python 3.4](https://www.python.org/download/releases/3.4.0/) - Python Version Used
+Built-in types: Most built-in types, such as integers (int), floating-point numbers (float), and strings (str), do not have a `__dict__` attribute. These types are generally immutable, meaning their attributes cannot be modified.
 
-## :warning: Prerequisites
+Class objects: The class objects themselves do not have a `__dict__` attribute. However, instances of classes do have a `__dict__` attribute, which holds the instance's attributes.
 
-* Must have `git` installed
+Objects that use slots: Python allows defining classes with the `__slots__` attribute, which restricts the set of attributes that an instance can have. When a class uses slots, it does not have a `__dict__` attribute because the instance attributes are stored in a more memory-efficient manner. The use of `__slots__` is an optimization technique and is not necessary for most scenarios.
 
-* Must have repository cloned
+It's important to note that while these objects may not have a `__dict__` attribute, they still have attributes and methods that can be accessed or modified using other means. For example, built-in types have predefined attributes and methods that can be accessed directly or through other built-in functions.
 
-* Must have `python3` installed
-
-```
-$ sudo apt-get install git
-```
-
-```
-$ sudo apt-get install python3
-```
-
-## :blue_book: Authors
-* **Bennett Dixon** - [@BennettDixon](https://github.com/BennettDixon)
-
-## :mag: License
-
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/BennettDixon/holbertonschool-higher_level_programming/blob/master/LICENSE.md) file for details
-
-
-
-## :mega: Acknowledgments
-
-* Holberton School (providing guidance)
+Keep in mind that these examples represent typical cases, but there might be exceptions or custom implementations where certain objects have a modified behavior and include a `__dict__` attribute.

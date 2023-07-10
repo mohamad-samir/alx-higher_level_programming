@@ -1,7 +1,6 @@
 #!/usr/bin/python3
+"""Geometry module"""
 
 
-class BaseGeometry():
-    """for use with shapes. Super class.
-    """
-    pass
+class BaseGeometry:
+    """An empty BaseGeometry class"""

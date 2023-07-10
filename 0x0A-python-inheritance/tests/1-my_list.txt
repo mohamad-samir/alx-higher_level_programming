@@ -1,22 +1,52 @@
-======================
-TESTS FOR 1-my_list.py
-======================
->>> MyList = __import__('1-my_list').MyList
->>> my_list = MyList()
->>> my_list.append(-40)
->>> my_list.append(40)
->>> my_list.append(0)
->>> print(my_list)
-[-40, 40, 0]
+========================
+My List
+========================
 
->>> my_list.print_sorted()
-[-40, 0, 40]
 
->>> my_list = MyList()
->>> my_list.append(4000000000000000)
->>> my_list.append(0)
->>> my_list.print_sorted()
-[0, 4000000000000000]
+Import module
+========================
+    >>> MyList = __import__('1-my_list').MyList
 
->>> print(my_list)
-[4000000000000000, 0]
+
+Tests
+========================
+
+* Create new instance
+
+    >>> my_list = MyList()
+
+* Print empty list
+
+    >>> print(my_list)
+    []
+
+    >>> my_list.print_sorted()
+    []
+
+* Append some arguments
+
+    >>> my_list.append(1)
+    >>> my_list.append(4)
+    >>> my_list.append(2)
+    >>> my_list.append(3)
+    >>> my_list.append(5)
+
+* Print list instance directly.
+    >>> print(my_list)
+    [1, 4, 2, 3, 5]
+
+* Call the `print_sorted()` method
+
+    >>> my_list.print_sorted()
+    [1, 2, 3, 4, 5]
+
+* Append some negative numbers
+
+    >>> my_list.append(-3)
+    >>> my_list.append(-7)
+
+    >>> print(my_list)
+    [1, 4, 2, 3, 5, -3, -7]
+
+    >>> my_list.print_sorted()
+    [-7, -3, 1, 2, 3, 4, 5]
