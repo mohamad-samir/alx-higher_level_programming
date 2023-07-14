@@ -9,4 +9,4 @@ def read_file(filename=""):
         filename (str, optional): Path to the text file. Defaults to "".
     """
     with open(filename, mode="r", encoding="utf-8") as s:
-        print(s.read())
+        print(s.read(), end="")
