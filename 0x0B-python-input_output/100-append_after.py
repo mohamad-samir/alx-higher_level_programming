@@ -12,15 +12,11 @@ def append_after(filename="", search_string="", new_string=""):
         search_string (str, optional): String to search for. Defaults to "".
         new_string (str, optional): String to be appended. Defaults to "".
     """
-    with open(filename, mode="r", encoding="utf-8") as s:
-        lines = s.readlines()
+    with open(filename, mode="r", encoding="utf-8") as file:
+        lines = file.readlines()
 
-    updated_lines = []
-    for line in lines:
-        if search_string in line:
-            updated_lines.extend((line, new_string))
-        else:
-            updated_lines.append(line)
-
-    with open(filename, mode="w", encoding="utf-8") as s:
-        s.writelines(updated_lines)
+    with open(filename, mode="w", encoding="utf-8") as file:
+        for line in lines:
+            file.write(line)
+            if search_string in line:
+                file.write(new_string)
