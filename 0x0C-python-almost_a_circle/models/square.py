@@ -20,6 +20,9 @@ class Square(Rectangle):
                                corner of the square. Defaults to 0.
             id (str, optional): A unique identifier for the square.
                                Defaults to None.
+        self._validate_attr(size, "width")
+        self._validate_attr(x, "x")
+        self._validate_attr(y, "y")
         """
         super().__init__(size, size, x, y, id)
 
