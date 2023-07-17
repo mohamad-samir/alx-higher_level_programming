@@ -21,15 +21,15 @@ class Square(Rectangle):
             id (str, optional): A unique identifier for the square.
                                Defaults to None.
 
-        self._validate_attr(size, "width")
-        self._validate_attr(x, "x")
-        self._validate_attr(y, "y")
+            self._validate_attr(size, "width")
+            self._validate_attr(x, "x")
+            self._validate_attr(y, "y")
 
-        The value validation for width and height is inherited
-        from the Rectangle class, so there's no need to add
-        additional validation in the Square class
-        super().__init__(size, size, x, y, id)
-        """
+            The value validation for width and height is inherited
+            from the Rectangle class, so there's no need to add
+            additional validation in the Square class
+            super().__init__(size, size, x, y, id)
+            """
 
     @property
     def size(self):
