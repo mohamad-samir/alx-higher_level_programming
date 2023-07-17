@@ -9,12 +9,20 @@ from pathlib import Path
 
 
 class Base:
-    """Base class which will be inherited by all other classes."""
-
+    """
+    Base class for future inheritance to Shapes
+    """
+    # Public Class Attributes
     __nb_objects = 0
 
+    # Constructor
     def __init__(self, id=None):
-        if id is not None:
+        """
+        Constructor of base Class with id.
+        Args:
+          - id: int (optional)
+        """
+        if (id is not None):
             self.id = id
         else:
             Base.__nb_objects += 1
