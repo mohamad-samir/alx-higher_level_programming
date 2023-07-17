@@ -47,7 +47,6 @@ class Square(Rectangle):
         Args:
             value (int): The length of one side of the square.
         """
-        self._validate_attr(value, "width")
         self.width = value
         self.height = value
 
