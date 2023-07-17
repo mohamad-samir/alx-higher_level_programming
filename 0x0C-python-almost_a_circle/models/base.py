@@ -24,10 +24,8 @@ class Base:
     @staticmethod
     def to_json_string(list_dictionaries) -> str:
         """Serializes a list of dictionaries to JSON string.
-
         Args:
             list_dictionaries (list of dicts): List of dictionaries.
-
         Returns:
             str: JSON string representation of the list of dictionaries.
         """
