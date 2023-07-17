@@ -46,6 +46,11 @@ class Square(Rectangle):
 
         Args:
             value (int): The length of one side of the square.
+
+        self._validate_attr(value, "width")
+        The value validation for width and height is inherited from
+        the Rectangle class,so there's no need to add additional
+        validation in the Square class
         """
         self.width = value
         self.height = value
