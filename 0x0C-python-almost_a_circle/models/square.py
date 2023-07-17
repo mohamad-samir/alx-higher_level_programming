@@ -23,6 +23,9 @@ class Square(Rectangle):
         self._validate_attr(size, "width")
         self._validate_attr(x, "x")
         self._validate_attr(y, "y")
+        The value validation for width and height is inherited from
+        the Rectangle class,so there's no need to add additional
+        validation in the Square class
         """
         super().__init__(size, size, x, y, id)
 
