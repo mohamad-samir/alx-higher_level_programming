@@ -46,21 +46,22 @@ class Base:
 
     @classmethod
     def create(cls, **dictionary):
-        """
-        Create a new instance (Rectangle, Square)
+        """Returns an instance with all attributes already set.
+
         Args:
-        - cls: New instance (Square or Rectangle)
-        - **dictionary (**kwargs)
+            **dictionary: A double pointer to a dictionary.
+
+        Returns:
+            An instance of the class with attributes
+            set according to `dictionary`.
         """
+        # Create a dummy instance with default values for mandatory attributes
+        dummy = cls(1, 1, 1, 1)
 
-        if (cls.__name__ == "Rectangle"):
-            dummy = cls(1, 1)
-        elif (cls.__name__ == "Square"):
-            dummy = cls(1)
-
+        # Use update to set the actual values
         dummy.update(**dictionary)
 
-        return (dummy)
+        return dummy
 
     @classmethod
     def load_from_file(cls):
