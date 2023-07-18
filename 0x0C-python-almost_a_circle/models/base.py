@@ -107,43 +107,32 @@ class Base:
         return [cls.create(**dict_) for dict_ in list_dicts]
 
     @classmethod
+    def save_to_file_csv(cls, list_objs):
+        filename = cls.__name__ + ".csv"
+        with open(filename, "w", newline='') as csvfile:
+            if list_objs is not None:
+                writer = csv.writer(csvfile)
+                if cls.__name__ == "Rectangle":
+                    for obj in list_objs:
+                        writer.writerow([obj.id, obj.width, obj.height, obj.x, obj.y])
+                elif cls.__name__ == "Square":
+                    for obj in list_objs:
+                        writer.writerow([obj.id, obj.size, obj.x, obj.y])
+
+    @classmethod
     def load_from_file_csv(cls):
-        """
-        Reads a CSV file and creates instances from the dictionaries.
-        The CSV file name should be the same as the class name.
-        """
-
-        # create the filename from the class name
-        file_name = cls.__name__ + ".csv"
-
-        # this list will store the instances created from the CSV data
+        filename = cls.__name__ + ".csv"
         instances = []
-
-        # check if the file exists
-        if os.path.exists(file_name):
-
-            # open the file
-            with open(file_name, "r", encoding="utf-8") as csv_file:
-
-                # create a CSV reader
-                reader = csv.reader(csv_file)
-
-                # determine the attributes based on the class name
-                attributes = ["id", "width", "height", "x", "y"]\
-                    if cls.__name__ == "Rectangle"\
-                    else ["id", "size", "x", "y"]
-
-                # for each row in the CSV data
+        try:
+            with open(filename, "r") as csvfile:
+                reader = csv.reader(csvfile)
                 for row in reader:
-
-                    # create a dictionary from the row data
-                    instance_data = {key: int(value)
-                                     for key, value in zip(attributes, row)}
-
-                    # create instance from dictionary and add it to the list
-                    instances.append(cls.create(**instance_data))
-
-        # return the list of instances
+                    if cls.__name__ == "Rectangle":
+                        instances.append(cls(int(row[0]), int(row[1]), int(row[2]), int(row[3]), int(row[4])))
+                    elif cls.__name__ == "Square":
+                        instances.append(cls(int(row[0]), int(row[1]), int(row[2]), int(row[3])))
+        except FileNotFoundError:
+            pass
         return instances
 
     # Static Methods
