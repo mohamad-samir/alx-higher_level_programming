@@ -86,28 +86,25 @@ class Base:
         return (result)
 
     @classmethod
-    def save_to_file_csv(cls, list_objs):
-        """
-        Save in a csv file a list of objs (Rectangles or Squares)
-        Args:
-          - cls: New instance of Base
-          - list_objs: List of instances[Squares or Rectangles]
-        """
-        result = []
-        namefile = cls.__name__ + ".csv"
-        options = ["Rectangle", "Square"]
-        name = ""
+    def load_from_file(cls):
+        """Returns a list of instances from a file.
 
-        if (list_objs is not None and len(list_objs)):
-            name = type(list_objs[0]).__name__
-            if (name in options):
-                if all((type(obj).__name__ == name) for obj in list_objs):
-                    result = [list(obj.to_dictionary().values())
-                              for obj in list_objs]
+        The filename must be: <Class name>.json.
+        If the file doesn’t exist, return an empty list.
+        Otherwise, return a list of instances.
 
-        with open(namefile, "w", encoding="utf-8") as _file:
-            for data in result:
-                _file.write(','.join(str(data)[1:-1].split(', ')) + '\n')
+        Returns:
+            list of instances: The type of these instances depends on cls.
+        """
+        filename = cls.__name__ + ".json"
+
+        if not os.path.exists(filename):
+            return []
+
+        with open(filename, "r") as file:
+            list_dicts = cls.from_json_string(file.read())
+
+        return [cls.create(**dict_) for dict_ in list_dicts]
 
     @classmethod
     def load_from_file_csv(cls):
