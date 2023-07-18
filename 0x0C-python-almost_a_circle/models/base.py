@@ -108,22 +108,44 @@ class Base:
 
     @classmethod
     def save_to_file_csv(cls, list_objs):
+        """Serializes a list of objects to a CSV file.
+
+        Args:
+            list_objs (list): List of objects whose data is to be saved to CSV.
         """
-        Save in a CSV file a list of objs (Rectangles or Squares)
+        filename = f"{cls.__name__}.csv"
+        with open(filename, mode="w", encoding="utf-8") as csv_file:
+            if cls.__name__ == "Rectangle":
+                columns = ["id", "width", "height", "x", "y"]
+            else:
+                columns = ["id", "size", "x", "y"]
+
+            writer = csv.DictWriter(csv_file, columns)
+            writer.writerows([obj.to_dictionary() for obj in list_objs])
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """
+        Save in a csv file a list of objs (Rectangles or Squares)
         Args:
           - cls: New instance of Base
           - list_objs: List of instances[Squares or Rectangles]
         """
-        if not list_objs:
-            return
+        result = []
+        namefile = cls.__name__ + ".csv"
+        options = ["Rectangle", "Square"]
+        name = ""
 
-        filename = cls.__name__ + ".csv"
-        obj_dicts = [obj.to_dictionary() for obj in list_objs]
+        if (list_objs is not None and len(list_objs)):
+            name = type(list_objs[0]).__name__
+            if (name in options):
+                if all((type(obj).__name__ == name) for obj in list_objs):
+                    result = [list(obj.to_dictionary().values())
+                              for obj in list_objs]
 
-        with open(filename, "w", encoding="utf-8") as _file:
-            writer = csv.DictWriter(_file, fieldnames=obj_dicts[0].keys())
-            writer.writeheader()
-            writer.writerows(obj_dicts)
+        with open(namefile, "w", encoding="utf-8") as _file:
+            for data in result:
+                _file.write(','.join(str(data)[1:-1].split(', ')) + '\n')
 
     @classmethod
     def load_from_file_csv(cls):
@@ -132,13 +154,29 @@ class Base:
         Args:
           - cls: New instance (Square or Rectangle)
         """
-        filename = cls.__name__ + ".csv"
-        if not os.path.exists(filename):
-            return []
 
-        with open(filename, mode="r", encoding="utf-8") as _file:
-            reader = csv.DictReader(_file)
-            return [cls.create(**row) for row in reader]
+        filename = cls.__name__ + ".csv"
+        rectangle_props = ["id", "width", "height", "x", "y"]
+        square_props = ["id", "size", "x", "y"]
+        result = []
+
+        if os.path.exists("./{:s}".format(filename)):
+            with open(filename, mode="r", encoding="utf-8") as _file:
+                data_csv = csv.reader(_file)
+                if (cls.__name__ == "Rectangle"):
+                    for data in data_csv:
+                        new_dict = {}
+                        for key, value in zip(rectangle_props, data):
+                            new_dict[key] = int(value)
+                        result.append(cls.create(**new_dict))
+                elif (cls.__name__ == "Square"):
+                    for data in data_csv:
+                        new_dict = {}
+                        for key, value in zip(square_props, data):
+                            new_dict[key] = int(value)
+                        result.append(cls.create(**new_dict))
+
+        return (result)
 
     # Static Methods
 
