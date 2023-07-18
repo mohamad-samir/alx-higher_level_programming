@@ -124,30 +124,6 @@ class Base:
             writer.writerows([obj.to_dictionary() for obj in list_objs])
 
     @classmethod
-    def save_to_file_csv(cls, list_objs):
-        """
-        Save in a csv file a list of objs (Rectangles or Squares)
-        Args:
-          - cls: New instance of Base
-          - list_objs: List of instances[Squares or Rectangles]
-        """
-        result = []
-        namefile = cls.__name__ + ".csv"
-        options = ["Rectangle", "Square"]
-        name = ""
-
-        if (list_objs is not None and len(list_objs)):
-            name = cls.__name__
-            if (name in options):
-                if all((type(obj).__name__ == name) for obj in list_objs):
-                    result = [list(obj.to_dictionary().values())
-                              for obj in list_objs]
-
-        with open(namefile, "w", encoding="utf-8") as _file:
-            for data in result:
-                _file.write(','.join(str(data)[1:-1].split(', ')) + '\n')
-
-    @classmethod
     def load_from_file_csv(cls):
         """
         Read a CSV file and create instances from the dicts
