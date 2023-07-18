@@ -107,35 +107,40 @@ class Base:
         return [cls.create(**dict_) for dict_ in list_dicts]
 
     @classmethod
-    def load_from_file_csv(cls):
-        """
-        Read a CSV file and create instances from the dicts
+    def save_to_file_csv(cls, list_objs):
+        """Serializes a list of instances to a CSV file.
+
+        The filename must be: <Class name>.csv.
+
         Args:
-          - cls: New instance (Square or Rectangle)
+            list_objs (list): A list of instances.
         """
-
         filename = cls.__name__ + ".csv"
-        rectangle_props = ["id", "width", "height", "x", "y"]
-        square_props = ["id", "size", "x", "y"]
-        result = []
 
-        if os.path.exists("./{:s}".format(filename)):
-            with open(filename, mode="r", encoding="utf-8") as _file:
-                data_csv = csv.reader(_file)
-                if (cls.__name__ == "Rectangle"):
-                    for data in data_csv:
-                        new_dict = {}
-                        for key, value in zip(rectangle_props, data):
-                            new_dict[key] = int(value)
-                        result.append(cls.create(**new_dict))
-                elif (cls.__name__ == "Square"):
-                    for data in data_csv:
-                        new_dict = {}
-                        for key, value in zip(square_props, data):
-                            new_dict[key] = int(value)
-                        result.append(cls.create(**new_dict))
+        with open(filename, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            for obj in list_objs:
+                writer.writerow(obj.to_dictionary().values())
 
-        return (result)
+    @classmethod
+    def load_from_file_csv(cls):
+        """Deserializes a list of instances from a CSV file.
+
+        The filename must be: <Class name>.csv.
+
+        Returns:
+            list of instances: The type of these instances depends on cls.
+        """
+        filename = cls.__name__ + ".csv"
+
+        if not os.path.exists(filename):
+            return []
+
+        with open(filename, 'r') as csvfile:
+            reader = csv.reader(csvfile)
+            list_dicts = [dict(zip(['id', 'width', 'height', 'x', 'y'], map(int, row))) for row in reader]
+
+        return [cls.create(**dict_) for dict_ in list_dicts]
 
     # Static Methods
     @staticmethod
