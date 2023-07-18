@@ -108,34 +108,53 @@ class Base:
 
     @classmethod
     def save_to_file_csv(cls, list_objs):
+        """Serializes a list of instances to a CSV file.
+
+        Args:
+            list_objs (list): A list of instances.
+        """
         filename = cls.__name__ + ".csv"
-        with open(filename, "w", newline='') as csvfile:
-            if list_objs is not None:
-                writer = csv.writer(csvfile)
-                if cls.__name__ == "Rectangle":
-                    for obj in list_objs:
-                        writer.writerow([obj.id, obj.width, obj.height, obj.x, obj.y])
-                elif cls.__name__ == "Square":
-                    for obj in list_objs:
-                        writer.writerow([obj.id, obj.size, obj.x, obj.y])
+
+        with open(filename, "w", newline='') as file:
+            writer = csv.writer(file)
+            for obj in list_objs:
+                if cls.__name__ == 'Rectangle':
+                    writer.writerow(
+                        [obj.id, obj.width, obj.height, obj.x, obj.y])
+                elif cls.__name__ == 'Square':
+                    writer.writerow([obj.id, obj.size, obj.x, obj.y])
 
     @classmethod
     def load_from_file_csv(cls):
+        """Deserializes a list of instances from a CSV file.
+
+        Returns:
+            list: A list of instances.
+        """
         filename = cls.__name__ + ".csv"
-        instances = []
-        try:
-            with open(filename, "r") as csvfile:
-                reader = csv.reader(csvfile)
-                for row in reader:
-                    if cls.__name__ == "Rectangle":
-                        instances.append(cls(int(row[0]), int(row[1]), int(row[2]), int(row[3]), int(row[4])))
-                    elif cls.__name__ == "Square":
-                        instances.append(cls(int(row[0]), int(row[1]), int(row[2]), int(row[3])))
-        except FileNotFoundError:
-            pass
-        return instances
+
+        if not os.path.exists(filename):
+            return []
+
+        list_objs = []
+
+        with open(filename, "r") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if cls.__name__ == 'Rectangle':
+                    dict_ = {'id': int(row[0]),
+                             'width': int(row[1]),
+                             'height': int(
+                        row[2]), 'x': int(row[3]), 'y': int(row[4])}
+                elif cls.__name__ == 'Square':
+                    dict_ = {'id': int(row[0]), 'size': int(
+                        row[1]), 'x': int(row[2]), 'y': int(row[3])}
+                list_objs.append(cls.create(**dict_))
+
+        return list_objs
 
     # Static Methods
+
     @staticmethod
     def to_json_string(list_dictionaries):
         """
