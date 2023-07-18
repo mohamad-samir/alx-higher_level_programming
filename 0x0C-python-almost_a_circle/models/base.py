@@ -154,10 +154,10 @@ class Base:
         Args:
           - list_dictionaries: list[dict]
         """
-        if (list_dictionaries is None or len(list_dictionaries) == 0):
-            return ("[]")
-
-        return (json.dumps(list_dictionaries))
+        if list_dictionaries is None or len(list_dictionaries) == 0:
+            return "[]"
+        else:
+            return json.dumps(list_dictionaries)
 
     @staticmethod
     def from_json_string(json_string):
