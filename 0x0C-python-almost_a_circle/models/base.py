@@ -108,6 +108,12 @@ class Base:
 
     @classmethod
     def save_to_file_csv(cls, list_objs):
+        """
+        Save in a csv file a list of objs (Rectangles or Squares)
+        Args:
+          - cls: New instance of Base
+          - list_objs: List of instances[Squares or Rectangles]
+        """
         filename = cls.__name__ + ".csv"
         with open(filename, 'w', newline='') as csvfile:
             if list_objs is not None:
@@ -121,6 +127,11 @@ class Base:
 
     @classmethod
     def load_from_file_csv(cls):
+        """
+        Read a CSV file and create instances from the dicts
+        Args:
+          - cls: New instance (Square or Rectangle)
+        """
         filename = cls.__name__ + ".csv"
         objects = []
         try:
