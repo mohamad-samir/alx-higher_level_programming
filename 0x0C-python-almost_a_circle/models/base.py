@@ -29,27 +29,22 @@ class Base:
             self.id = Base.__nb_objects
 
     # Class Methods
-    @classmethod
-    def save_to_file(cls, list_objs):
-        """
-        Save in a json file a list of objs (Rectangles or Squares)
-        Args:
-          - cls: New instance of Base
-          - list_objs: List of instances[Squares or Rectangles]
-        """
-        result = []
-        namefile = cls.__name__ + ".json"
-        options = ["Rectangle", "Square"]
-        name = ""
 
-        if (list_objs is not None and len(list_objs)):
-            name = type(list_objs[0]).__name__
-            if (name in options):
-                if all((type(obj).__name__ == name) for obj in list_objs):
-                    result = [obj.to_dictionary() for obj in list_objs]
 
-        with open(namefile, mode="w", encoding="utf-8") as _file:
-            _file.write(cls.to_json_string(result))
+@classmethod
+def save_to_file(cls, list_objs):
+    """Writes the JSON string representation of `list_objs` to a file.
+
+    Args:
+        list_objs (list of objs): List of instances.
+    """
+    filename = f"{cls.__name__}.json"
+    with open(filename, mode="w", encoding="utf-8") as json_file:
+        if not list_objs:
+            json_file.write(cls.to_json_string([]))
+        else:
+            dict_objs = [obj.to_dictionary() for obj in list_objs]
+            json_file.write(cls.to_json_string(dict_objs))
 
     @classmethod
     def create(cls, **dictionary):
