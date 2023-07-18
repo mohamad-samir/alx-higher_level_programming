@@ -31,11 +31,11 @@ class Base:
 	# Class Methods
 	@classmethod
 	def save_to_file(cls, list_objs):
-	"""Writes the JSON string representation of `list_objs` to a file.
+		"""Writes the JSON string representation of `list_objs` to a file.
 
-	Args:
-		list_objs (list of objs): List of instances.
-	"""
+		Args:
+			list_objs (list of objs): List of instances.
+		"""
 		filename = f"{cls.__name__}.json"
 		with open(filename, mode="w", encoding="utf-8") as json_file:
 			if not list_objs:
