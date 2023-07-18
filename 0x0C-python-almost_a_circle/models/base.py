@@ -107,40 +107,44 @@ class Base:
         return [cls.create(**dict_) for dict_ in list_dicts]
 
     @classmethod
-    def save_to_file_csv(cls, list_objs):
-        """Serializes a list of instances to a CSV file.
-
-        The filename must be: <Class name>.csv.
-
-        Args:
-            list_objs (list): A list of instances.
-        """
-        filename = cls.__name__ + ".csv"
-
-        with open(filename, 'w', newline='') as csvfile:
-            writer = csv.writer(csvfile)
-            for obj in list_objs:
-                writer.writerow(obj.to_dictionary().values())
-
-    @classmethod
     def load_from_file_csv(cls):
-        """Deserializes a list of instances from a CSV file.
-
-        The filename must be: <Class name>.csv.
-
-        Returns:
-            list of instances: The type of these instances depends on cls.
         """
-        filename = cls.__name__ + ".csv"
+        Reads a CSV file and creates instances from the dictionaries.
+        The CSV file name should be the same as the class name.
+        """
 
-        if not os.path.exists(filename):
-            return []
+        # create the filename from the class name
+        file_name = cls.__name__ + ".csv"
 
-        with open(filename, 'r') as csvfile:
-            reader = csv.reader(csvfile)
-            list_dicts = [dict(zip(['id', 'width', 'height', 'x', 'y'], map(int, row))) for row in reader]
+        # this list will store the instances created from the CSV data
+        instances = []
 
-        return [cls.create(**dict_) for dict_ in list_dicts]
+        # check if the file exists
+        if os.path.exists(file_name):
+
+            # open the file
+            with open(file_name, "r", encoding="utf-8") as csv_file:
+
+                # create a CSV reader
+                reader = csv.reader(csv_file)
+
+                # determine the attributes based on the class name
+                attributes = ["id", "width", "height", "x", "y"]\
+                    if cls.__name__ == "Rectangle"\
+                    else ["id", "size", "x", "y"]
+
+                # for each row in the CSV data
+                for row in reader:
+
+                    # create a dictionary from the row data
+                    instance_data = {key: int(value)
+                                     for key, value in zip(attributes, row)}
+
+                    # create instance from dictionary and add it to the list
+                    instances.append(cls.create(**instance_data))
+
+        # return the list of instances
+        return instances
 
     # Static Methods
     @staticmethod
