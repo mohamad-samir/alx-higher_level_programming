@@ -137,7 +137,7 @@ class Base:
         name = ""
 
         if (list_objs is not None and len(list_objs)):
-            name = type(list_objs[0]).__name__
+            name = cls.__name__
             if (name in options):
                 if all((type(obj).__name__ == name) for obj in list_objs):
                     result = [list(obj.to_dictionary().values())
