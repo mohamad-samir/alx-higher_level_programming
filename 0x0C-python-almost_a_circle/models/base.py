@@ -6,7 +6,6 @@ import csv
 import json
 import os
 import turtle
-from pathlib import Path
 
 
 class Base:
@@ -109,45 +108,34 @@ class Base:
 
     @classmethod
     def save_to_file_csv(cls, list_objs):
-        """Serializes a list of objects to a CSV file.
-
-        Args:
-            list_objs (list): List of objects whose data is to be saved to CSV.
-        """
-        filename = f"{cls.__name__}.csv"
-        with open(filename, mode="w", encoding="utf-8") as csv_file:
-            if cls.__name__ == "Rectangle":
-                columns = ["id", "width", "height", "x", "y"]
-            else:
-                columns = ["id", "size", "x", "y"]
-
-            writer = csv.DictWriter(csv_file, columns)
-            writer.writerows([obj.to_dictionary() for obj in list_objs])
+        filename = cls.__name__ + ".csv"
+        with open(filename, 'w', newline='') as csvfile:
+            if list_objs is not None:
+                writer = csv.writer(csvfile)
+                for obj in list_objs:
+                    if cls.__name__ == "Rectangle":
+                        writer.writerow(
+                            [obj.id, obj.width, obj.height, obj.x, obj.y])
+                    elif cls.__name__ == "Square":
+                        writer.writerow([obj.id, obj.size, obj.x, obj.y])
 
     @classmethod
-    def load_from_file_csv(cls) -> list:
-        """Deserializes a CSV file and uses the data to create new objects.
-
-        Returns:
-            list: List of objects created with the data read from the CSV.
-        """
-        filename = f"{cls.__name__}.csv"
-
-        if not Path(filename).is_file():
-            return []
-
-        with open(filename, mode="r", encoding="utf-8") as csv_file:
-            if cls.__name__ == "Rectangle":
-                columns = ["id", "width", "height", "x", "y"]
-            else:
-                columns = ["id", "size", "x", "y"]
-
-            reader = csv.DictReader(csv_file, columns)
-            reader = [
-                {key: int(value) for key, value in row.items()}
-                for row in reader
-            ]
-            return [cls.create(**(args)) for args in reader]
+    def load_from_file_csv(cls):
+        filename = cls.__name__ + ".csv"
+        objects = []
+        try:
+            with open(filename, 'r', newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if cls.__name__ == "Rectangle":
+                        objects.append(cls(int(row[0]), int(row[1]), int(
+                            row[2]), int(row[3]), int(row[4])))
+                    elif cls.__name__ == "Square":
+                        objects.append(cls(int(row[0]), int(
+                            row[1]), int(row[2]), int(row[3])))
+        except FileNotFoundError:
+            pass
+        return objects
 
     # Static Methods
 
