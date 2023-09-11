@@ -1,6 +1,12 @@
 #!/usr/bin/node
-function factorial (n) {
-  return n === 0 || isNaN(n) ? 1 : n * factorial(n - 1);
-}
+const { argv } = require('process');
 
-console.log(factorial(Number(process.argv[2])));
+const num = parseInt(argv[2]);
+console.log(factorial(num));
+
+function factorial (num) {
+  if (!num) {
+    return 1;
+  }
+  return num * factorial(num - 1);
+}
