@@ -1,34 +1,33 @@
+#!/usr/bin/python3
 import MySQLdb
+import sys
 
-def get_all_states(username, password, database):
-  """Connects to a MySQL server running on localhost at port 3306 and lists all states from the database hbtn_0e_0_usa, sorted in ascending order by states.id.
+if __name__ == "__main__":
+    # Check if the correct number of arguments is provided
+    if len(sys.argv) != 4:
+        print("Usage: {} <username> <password> <database>".format(sys.argv[0]))
+        sys.exit(1)
 
-  Args:
-    username: The MySQL username.
-    password: The MySQL password.
-    database: The database name.
+    username = sys.argv[1]
+    password = sys.argv[2]
+    database = sys.argv[3]
 
-  Returns:
-    A list of tuples, where each tuple contains an integer state ID and a string state name.
-  """
+    # Connect to the MySQL server running on localhost at port 3306
+    db = MySQLdb.connect(host="localhost", port=3306, user=username, passwd=password, db=database)
 
-  connection = MySQLdb.connect(host='localhost', port=3306, user=username, passwd=password, db=database)
-  cursor = connection.cursor()
+    # Create a cursor object to interact with the database
+    cursor = db.cursor()
 
-  cursor.execute('SELECT id, name FROM states ORDER BY id ASC')
-  states = cursor.fetchall()
+    # Execute the SQL query to select all states and order them by states.id
+    cursor.execute("SELECT * FROM states ORDER BY id ASC")
 
-  cursor.close()
-  connection.close()
+    # Fetch all rows from the result set
+    rows = cursor.fetchall()
 
-  return states
+    # Display the results
+    for row in rows:
+        print(row)
 
-if __name__ == '__main__':
-  username = input('Enter MySQL username: ')
-  password = input('Enter MySQL password: ')
-  database = input('Enter database name: ')
-
-  states = get_all_states(username, password, database)
-
-  for state in states:
-    print(state)
+    # Close the cursor and database connection
+    cursor.close()
+    db.close()
