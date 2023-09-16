@@ -24,10 +24,10 @@ if __name__ == "__main__":
     cursor = db.cursor()
 
     cursor.execute(
-        "SELECT name FROM cities WHERE state_id IN (SELECT id FROM states WHERE name = %s) ORDER BY id",
+        "SELECT c.id, c.name, s.name FROM cities AS c JOIN states AS s ON c.state_id = s.id WHERE s.name = %s ORDER BY c.id",
         (state_name,)
     )
 
     rows = cursor.fetchall()
-    cities = [row[0] for row in rows]
-    print(", ".join(cities))
+    cities = ', '.join(row[1] for row in rows)
+    print(cities)
