@@ -13,7 +13,7 @@ if __name__ == "__main__":
     host: str = "localhost"
     port: int = 3306
     statement: str = """
-    SELECT * FROM states
+    SELECT DISTINCT * FROM states
     WHERE BINARY name = %s
     ORDER BY id
     """
