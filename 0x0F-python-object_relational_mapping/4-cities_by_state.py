@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Lists all values in the states table of hbtn_0e_0_usa where name matches the argument (safe from MySQL injection)
+Lists all cities from the database hbtn_0e_4_usa
 """
 import sys
 import MySQLdb
@@ -9,7 +9,6 @@ if __name__ == "__main__":
     username: str = sys.argv[1]
     password: str = sys.argv[2]
     db_name: str = sys.argv[3]
-    state_name: str = sys.argv[4]
     host: str = "localhost"
     port: int = 3306
 
@@ -22,9 +21,14 @@ if __name__ == "__main__":
     )
     cursor = db.cursor()
 
+    # Execute the query
     cursor.execute(
-        "SELECT * FROM states WHERE name = %s ORDER BY id",
-        (state_name,)
+        """
+        SELECT cities.id, cities.name, states.name
+        FROM cities
+        JOIN states ON cities.state_id = states.id
+        ORDER BY cities.id
+        """
     )
 
     rows = cursor.fetchall()
