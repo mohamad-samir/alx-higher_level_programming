@@ -1,27 +1,17 @@
 #!/usr/bin/python3
-"""
-This module defines a City class that represents a table `cities`
-in an SQL database.
+"""script for using sqlalchemy to model our models using ORM
 """
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
 
 from model_state import Base
 
 
 class City(Base):
+    """cities class for use with sqlalchemy
+        -> inherits from sqlalchemy declarative_base
     """
-    Represents a city in a database table.
-
-    Attributes:
-        id (int): The primary key for the table.
-        name (str): The name of the city.
-    """
-
     __tablename__ = 'cities'
 
-    id: int = Column(Integer, primary_key=True)
-    name: int = Column(String(128), nullable=False)
-    state_id: int = Column(Integer, ForeignKey('states.id'))
-
-    state = relationship('State', backref='cities')
+    id = Column(Integer, primary_key=True)
+    name = Column(String(128), nullable=False)
+    state_id = Column(Integer, ForeignKey("states.id"), nullable=False)

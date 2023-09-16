@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-This module defines a State class that represents a table `states`
-in an SQL database.
+"""script for using sqlalchemy to model our models using ORM
 """
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,14 +8,9 @@ Base = declarative_base()
 
 
 class State(Base):
+    """state class for use with sqlalchemy
+        -> inherits from sqlalchemy declarative_base
     """
-    Represents a state in a database table.
-
-    Attributes:
-        id (int): The primary key for the table.
-        name (str): The name of the state.
-    """
-
     __tablename__ = 'states'
 
     id = Column(Integer, primary_key=True)
