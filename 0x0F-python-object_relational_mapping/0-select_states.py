@@ -10,7 +10,7 @@ if __name__ == "__main__":
     db_name: str = sys.argv[3]
     host: str = "localhost"
     port: int = 3306
-    statement: str = """SELECT * FROM states ORDER BY id"""
+    statement: str = """SELECT DISTINCT * FROM states ORDER BY id"""
 
     db = MySQLdb.connect(
         user=username,
