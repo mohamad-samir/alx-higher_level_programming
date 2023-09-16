@@ -10,9 +10,18 @@ if __name__ == "__main__":
     username: str = sys.argv[1]
     password: str = sys.argv[2]
     db_name: str = sys.argv[3]
-    state_name: str = sys.argv[4]
+    arg: str = sys.argv[4]
     host: str = "localhost"
     port: int = 3306
+
+    statement: str = """
+    SELECT c.id, c.name, s.name
+    FROM cities AS c
+    JOIN states AS s
+    ON c.state_id = s.id
+    HAVING BINARY s.name = %s
+    ORDER BY c.id;
+    """
 
     db = MySQLdb.connect(
         user=username,
@@ -23,11 +32,8 @@ if __name__ == "__main__":
     )
     cursor = db.cursor()
 
-    cursor.execute(
-        "SELECT c.id, c.name, s.name FROM cities AS c JOIN states AS s ON c.state_id = s.id WHERE s.name = %s ORDER BY c.id",
-        (state_name,)
-    )
-
+    cursor.execute(statement, (arg,))
     rows = cursor.fetchall()
-    cities = ', '.join(row[1] for row in rows)
+    cities = tuple(row[1] for row in rows)
+    cities = ', '.join(cities)
     print(cities)
