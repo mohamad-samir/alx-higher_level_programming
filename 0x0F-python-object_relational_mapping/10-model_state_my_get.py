@@ -1,29 +1,40 @@
 #!/usr/bin/python3
-"""script to list all state objects using sqlalchemy
 """
-from model_state import Base, State
+This script prints the State object with the name passed as argument
+from the database hbtn_0e_6_usa
+"""
 
-from sqlalchemy.orm import sessionmaker
-
-from sqlalchemy import (create_engine)
 
 import sys
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-if __name__ == '__main__':
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
-                           .format(sys.argv[1], sys.argv[2], sys.argv[3]))
-    state_name = sys.argv[4]
-    # create custom session object class from database engine
-    Session = sessionmaker(bind=engine)
-    # create instance of new custom session class
+from model_state import Base, State
+
+if __name__ == "__main__":
+    username: str = sys.argv[1]
+    password: str = sys.argv[2]
+    db_name: str = sys.argv[3]
+    arg: str = sys.argv[4]
+    host: str = "localhost"
+    port: int = 3306
+
+    Session = sessionmaker()
+    engine = create_engine(
+        f"mysql+mysqldb://{username}:{password}@{host}/{db_name}",
+        pool_pre_ping=True,
+    )
+    Base.metadata.create_all(engine)
+    Session.configure(bind=engine)
     session = Session()
-    # find states matching state_name
-    states = session.query(State)\
-                    .filter(State.name == state_name)\
-                    .order_by(State.id)
-    if (states is not None and states.count() > 0):
-        for state in states:
-            print('{}'.format(state.id))
+
+    if (
+        query := session.query(State)
+        .order_by(State.id)
+        .filter(State.name == arg)
+        .first()
+    ):
+        print(query.id)
     else:
-        print('Not found')
+        print("Not found")

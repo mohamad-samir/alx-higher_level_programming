@@ -1,16 +1,15 @@
 #!/usr/bin/python3
 """
-This script lists all State objects that contain the letter a from the
-database hbtn_0e_6_usa
+This script lists all City objects from the database hbtn_0e_101_usa
 """
-
 
 import sys
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from model_state import Base, State
+from relationship_state import Base, State
+from relationship_city import City
 
 if __name__ == "__main__":
     username: str = sys.argv[1]
@@ -21,17 +20,15 @@ if __name__ == "__main__":
 
     Session = sessionmaker()
     engine = create_engine(
-        f"mysql+mysqldb://{username}:{password}@{host}/{db_name}",
+        f"mysql+mysqldb://{username}:{password}@{host}:{port}/{db_name}",
         pool_pre_ping=True,
     )
     Base.metadata.create_all(engine)
     Session.configure(bind=engine)
     session = Session()
 
-    if (
-        query := session.query(State)
-        .order_by(State.id)
-        .filter(State.name.contains("a"))
-    ):
-        for state in query:
-            print(state.id, state.name, sep=": ")
+    if cities := session.query(City).order_by(City.id):
+        for city in cities:
+            print(f"{city.id}: {city.name} -> {city.state.name}")
+
+    session.close()
