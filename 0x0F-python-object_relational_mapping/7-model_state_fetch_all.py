@@ -4,27 +4,25 @@ Lists all State objects from the database hbtn_0e_6_usa
 """
 
 import sys
-
-from sqlalchemy import (create_engine)
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from model_state import Base, State
 
 if __name__ == "__main__":
-    username: str = sys.argv[1]
-    password: str = sys.argv[2]
-    db_name: str = sys.argv[3]
-    host: str = "localhost"
-    port: int = 3306
+    username = sys.argv[1]
+    password = sys.argv[2]
+    db_name = sys.argv[3]
+    host = "localhost"
+    port = 3306
 
-    Session = sessionmaker()
-    engine = create_engine(
-        f'mysql+mysqldb://{username}:{password}@{host}/{db_name}',
-        pool_pre_ping=True,
-    )
-    Base.metadata.create_all(engine)
-    Session.configure(bind=engine)
+    # Setup SQLAlchemy engine and session
+    engine = create_engine(f'mysql+mysqldb://{username}:{password}@{host}/{db_name}', pool_pre_ping=True)
+    Session = sessionmaker(bind=engine)
     session = Session()
 
+    # Query for all State objects
     for state in session.query(State).order_by(State.id):
-        print(state.id, state.name, sep=': ')
+        print(f"{state.id}: {state.name}")
+
+    # Close the session
+    session.close()
