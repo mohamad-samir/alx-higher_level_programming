@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // الدالة التي ستقوم بجلب الترجمة بناءً على كود اللغة المُدخل
+    // Function to fetch translation based on the language code entered
     function fetchTranslation() {
         const lang = $("#language_code").val();
         const URL = `https://www.fourtonfish.com/hellosalut/hello/${lang}`;
@@ -9,12 +9,12 @@ $(document).ready(function () {
         });
     }
 
-    // الاستماع لحدث النقر على الزر
+    // Listen for click event on the button
     $("#btn_translate").click(fetchTranslation);
 
-    // الاستماع لحدث الضغط على المفاتيح داخل حقل الإدخال
+    // Listen for keypress event inside the input field
     $("#language_code").keydown(function (event) {
-        // إذا كان المفتاح المضغوط هو ENTER (والذي يملك القيمة 13)
+        // If the pressed key is ENTER (which has a value of 13)
         if (event.which === 13) {
             fetchTranslation();
         }
